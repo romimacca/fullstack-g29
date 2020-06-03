@@ -5,7 +5,7 @@ ventas = {
 }
 
 def filtro_venta(ventas)
-    n_ventas ={}
+    n_ventas = {}
     ventas.each do |k, v|
         if v > 70000
             n_ventas[k] = v
