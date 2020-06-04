@@ -7,31 +7,42 @@ def request(url, api)
 
     https = Net::HTTP.new(url.host, url.port);
     https.use_ssl = true
-    # https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
     request = Net::HTTP::Get.new(url)
-    # request["cache-control"] = 'no-cache'
    
     response = https.request(request)
     JSON.parse(response.read_body)
 end
 
-
-api_key = "milLdKdi6cHXjHxO20VEH63RlxG35QpOvCcrc3Sq"
-data = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3', api_key)
-
-data.each do |k, v|
-    v.each do |k, v|
-        puts k
-        puts "\n \n \n"
+def build_web_page(photos)
+    html = "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Mars Rover Photos</title>\n</head>\n<body style='background-color:black;'>\n\t<ul>\n"
+    photos.each do |photo|
+        html += "\t\t<li style='width:33%; display: inline-block; vertical-align: middle;'>\n\t\t\t<img src='#{photo}' alt='' style='width:100%;padding:5px;'>\n\t\t</li>\n"
     end
+    html += "\t</ul>\n</body>\n</html>\n"
+
+    File.write('output.html', html)
 end
 
-# imagen = data.map{|x| x['img_src']}
-# puts data
+def photos_count(photos)
+    counter = {}
+    photos.each do |photo|
+        full_name = photo['camera']['full_name']
+        if counter.keys.include?(full_name)
+            counter[full_name] += 1
+        else
+            counter[full_name] = 1
+        end
+    end
+   counter
+end
 
-# def build_web_page()
+api_key = "milLdKdi6cHXjHxO20VEH63RlxG35QpOvCcrc3Sq"
+data = request('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10', api_key)
 
-# end
+photos = data['photos']
+url_photos = photos.map {|photo| photo['img_src']}
 
-# photos = data.map{|x| x['img_src']} #para buscar imagen
+
+build_web_page(url_photos)
+puts photos_count(photos)
