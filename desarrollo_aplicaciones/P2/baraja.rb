@@ -7,7 +7,7 @@ class Baraja
         @cartas = []
         pinta.each do |pinta|
             13.times do |i|
-                @cartas.push( Carta.new(i+1, pinta) )
+                @cartas.push( Carta.new(i+1, pinta))
             end
         end
     end
