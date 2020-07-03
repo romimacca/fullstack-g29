@@ -35,7 +35,3 @@ class Parent < Person
         "Hola. Soy uno de los apoderados. Mi nombre es #{@first_name} #{@last_name}."
     end
 end
-
-# Romi = Teacher.new('Romina', 'Maccarini', 29)
-# puts Romi.talk
-# puts Romi.birthday

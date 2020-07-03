@@ -44,57 +44,69 @@ class Animal
 end
 
 class Ave < Animal
-    include Alimentacion::Carnivoro
 end
 
 class Mamifero < Animal
-    include Habilidades::Caminante
-
 end
 
 class Insecto < Animal
-    include Habilidades::Volador
-    include Alimentacion::Herbivoro
 end
 # =========== Aves
 class Pinguino < Ave
     include Habilidades::Nadador
+    include Habilidades::Caminante
+    include Alimentacion::Carnivoro
 end
 class Paloma < Ave
     include Habilidades::Volador
+    include Habilidades::Caminante
+    include Alimentacion::Carnivoro
     
 end
 class Pato < Ave
-    include Habilidades::Nadador
     include Habilidades::Volador
-    
+    include Habilidades::Nadador
+    include Habilidades::Caminante
+    include Alimentacion::Carnivoro
+    alias :como_carne :comer
+    include Alimentacion::Herbivoro
 end
 # =========== Mamifero
 class Perro < Mamifero
+    include Habilidades::Nadador
+    include Habilidades::Caminante
     include Alimentacion::Carnivoro
+    alias :como_carne :comer
+    include Alimentacion::Herbivoro
 end
 
 class Gato < Mamifero
+    include Habilidades::Caminante
     include Alimentacion::Carnivoro
 end
 
 class Vaca < Mamifero
+    include Habilidades::Caminante
     include Alimentacion::Herbivoro
 end
 # =========== Insecto
 class Mosca < Insecto
-    
+    include Habilidades::Volador
+    include Alimentacion::Carnivoro
+    alias :como_carne :comer
+    include Alimentacion::Herbivoro 
 end
 
 class Mariposa < Insecto
-    
+    include Habilidades::Volador
+    include Alimentacion::Herbivoro
 end
 
 class Abeja < Insecto
-    
+    include Habilidades::Volador
+    include Alimentacion::Herbivoro
 end
 
 perro_1 = Perro.new('Ada')
 
 puts perro_1.comer
-puts perro_1.sumergir
